@@ -1,9 +1,9 @@
 # STRIPPED DOWN CODE
 # GENERATE DATA 
 source('PERM Functions v0.1.R')
-Data <- Reservoir.Single.Generate(Len=248, Rate=.8 ,B=-.5, Err=.1, scale=NA)
+Data <- Reservoir.Single.Generate(Len=248, Rate=.8 ,B=-.1, Err=.1, scale=NA)
 x <- Data$y/Data$scale
-m <- rnorm(248,0,1)
+#m <- rnorm(248,0,1)
 
 #estimate ballpark values to inform prior distributions			
 sel <-  x[-1]>x[-length(x)]
@@ -17,7 +17,7 @@ if(is.na(priorval[1])) {
   priorval[1] <- 1/mean(change + 0.5*x[-length(x)],na.rm=TRUE)
   priorval[2] <- 2 }
 
-datalist <- list(xobs=x, mobs=m, L=length(x), priorval=priorval)
+datalist <- list(xobs=x, L=length(x), priorval=priorval) #mobs=m,
 
 # RUN MODEL
 require(rstan)
@@ -29,7 +29,6 @@ summary(fit1)
 
 traceplot(fit1, pars = c(
   'tau_0'
-  , 'tau_1'
   , 'mean_rate_inputs'
   , 'precision_measerr'
   ,'lp__'
@@ -39,7 +38,6 @@ pairs(
   x = fit1
   , pars = c(
     'tau_0'
-    , 'tau_1'
     , 'mean_rate_inputs'
     , 'precision_measerr'
     ,'lp__'

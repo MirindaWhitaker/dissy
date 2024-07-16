@@ -5,7 +5,7 @@
 				vector[2] priorval; //specifciation of priors 
 			}
 			parameters {
-				real tau_0; //beta intercept 
+				real<upper=.7> tau_0; //beta intercept 
 			  //real tau_1; //tau for predictor
 				real<lower=0> mean_rate_inputs;
 				real<lower=0> precision_measerr;

@@ -2,6 +2,7 @@
 				int<lower=0> L; //length of time series
 				vector<lower=0>[L] xobs; //time series of length L
 				vector [L] mobs;//moderator timeseries
+				vector[2] priorval; //specifciation of priors 
 			}
 			parameters {
 				real tau_0; //beta intercept 
@@ -31,10 +32,10 @@
           xobs[t] ~ normal(latent[t], sigma_measerr);
 					}
 	
-			    mean_rate_inputs ~ exponential(1.2);
-			    precision_measerr ~ exponential(10);
-			    tau_0 ~ normal(0,.01);
-		      tau_1 ~ normal(0,.01);
+			    mean_rate_inputs ~ exponential(priorval[1]);
+			    precision_measerr ~ exponential(priorval[2]);
+			    tau_0 ~ normal(0,.001);
+		      tau_1 ~ normal(0,.001);
 			}
 			
 			

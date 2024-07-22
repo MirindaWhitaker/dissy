@@ -23,7 +23,7 @@ datalist <- list(xobs=x, L=length(x), priorval=priorval) #mobs=m,
 require(rstan)
 model1 <- stan_model('PERM mod dev 7.24.stan')
 options(mc.cores = parallel::detectCores())
-fit2 <- sampling(model1, open_progress=FALSE, data = datalist, chains=4,cores=4,  
+fit1 <- sampling(model1, open_progress=FALSE, data = datalist, chains=4,cores=4,  
          iter=8000, control = list(adapt_delta = 0.9, stepsize=.8))
 summary(fit1)
 exp(summary(fit1)$summary[1])
@@ -48,7 +48,7 @@ pairs(
 Sys.time()
 fit_sum <- list()
 
-for (i in 1:50){
+for (i in 1:20){
   # GENERATE DATA 
   source('PERM Functions v0.1.R')
   Data <- Reservoir.Single.Generate(Len=248, Rate=.8 ,B=-.5, Err=.1, scale=NA)
@@ -85,8 +85,8 @@ pbPost(type = "note", title = "done", body = "30 loop complete")
 Sys.time()
 
 # REVIEW RUNS
-tau_0beta <- rep(NA, 30)
-for (i in 1:30) {
+tau_0beta <- rep(NA, 10)
+for (i in 1:10) {
   tau_0beta[i] <- exp(summary(fit_sum[[i]])$summary[[1]])
 }
 
